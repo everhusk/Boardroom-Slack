@@ -77,7 +77,7 @@ controller.hears('proposal', ['direct_message','direct_mention','mention'], func
         convo.next();
       });
     }
-    askCompanyShares = function(response, convo) {
+    askVotingTime = function(response, convo) {
       var channel = response.channel;
       convo.ask('Got it. How long do people have to vote?', function(response, convo) {
         convo.say('Setting up your proposal now...');
