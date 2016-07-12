@@ -6,7 +6,7 @@ var ethereum = new Web3(new Web3.providers.HttpProvider("https://eth3.augur.net"
 var Botkit = require('botkit');
 var controller = Botkit.slackbot();
 var bot = controller.spawn({
-  token: 'xoxb-012345678-ABC1DFG2HIJ3'
+  token: process.env.SLACK_TOKEN
 })
 bot.startRTM(function(err,bot,payload) {
   if (err) {
