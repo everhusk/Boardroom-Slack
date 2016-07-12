@@ -9,6 +9,7 @@
   "author": "Sukhveer Sanghera",
   "license": "MIT",
   "dependencies": {
+    "botkit": "^0.2.2",
     "slackbots": "^0.5.1",
     "web3": "^0.17.0-alpha"
   }
