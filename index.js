@@ -40,15 +40,21 @@ controller.hears('paid', ['direct_message','direct_mention','mention'], function
         // Create contract
       });
       convo.on('end',function(convo) {
-
+        console.log('Convo:',convo);
         if (convo.status=='completed') {
-          // do something useful with the users responses
+          // Extract the user's responses
           var res = convo.extractResponses();
-          // reference a specific response by key
-          console.log("Convo results: ",res);
-          convo.say('Setup your company <company_name> with <number_of_shares>. Verified on the blockchain: <ether.scan.io/iaweijfaof23ijfi>.');
+          var values = [];
+          for (var value in res){
+            values.push(value);
+          };
+          // Save the results
+          var companyName = value[0];
+          var companyShares = value[1];
+          convo.say('Setup your company '+companyName+' with '+companyShares+'. Verified on the blockchain: <ether.scan.io/iaweijfaof23ijfi>.');
         } else {
           // something happened that caused the conversation to stop prematurely
+          convo.say('There was an issue setting up your account. Please try again.');
         }
 
       });
