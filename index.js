@@ -45,14 +45,14 @@ controller.hears('paid', ['direct_message','direct_mention','mention'], function
           // Extract the user's responses
           var res = convo.extractResponses();
           var values = [];
-          for (var value in res){
-            values.push(value);
+          for (var key in res){
+            values.push(res[key]);
           };
           // Save the results
           var companyName = values[0];
           var companyShares = values[1];
           bot.say({
-            text:'Setup your company '+companyName+' with '+companyShares+'. Verified on the blockchain: <ether.scan.io/iaweijfaof23ijfi>.',
+            text:'Setup your company '+companyName+' with '+companyShares+'. Verified on the blockchain: www.ether.scan.io/iaweijfaof23ijfi.',
             channel:channel
           });
         } else {
