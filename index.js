@@ -49,8 +49,8 @@ controller.hears('paid', ['direct_message','direct_mention','mention'], function
             values.push(value);
           };
           // Save the results
-          var companyName = value[0];
-          var companyShares = value[1];
+          var companyName = values[0];
+          var companyShares = values[1];
           bot.say({
             text:'Setup your company '+companyName+' with '+companyShares+'. Verified on the blockchain: <ether.scan.io/iaweijfaof23ijfi>.',
             channel:channel
