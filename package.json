@@ -1,0 +1,15 @@
+{
+  "name": "slack-dao",
+  "version": "1.0.0",
+  "description": "A Slack bot which interfaces with a DAO Ethereum contract.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sukhveer Sanghera",
+  "license": "MIT",
+  "dependencies": {
+    "slackbots": "^0.5.1",
+    "web3": "^0.17.0-alpha"
+  }
+}
