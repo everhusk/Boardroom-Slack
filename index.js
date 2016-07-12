@@ -52,7 +52,7 @@ controller.hears('paid', ['direct_message','direct_mention','mention'], function
           var companyName = values[0];
           var companyShares = values[1];
           bot.say({
-            text:'Setup your company '+companyName+' with '+companyShares+'. Verified on the blockchain: www.ether.scan.io/iaweijfaof23ijfi.',
+            text:'Setup your company named "'+companyName+'" with '+companyShares+' shares available. Verified on the blockchain: www.ether.scan.io/link-to-transaction.',
             channel:channel
           });
         } else {
