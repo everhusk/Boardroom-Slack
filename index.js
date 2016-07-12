@@ -34,7 +34,7 @@ controller.hears('paid', ['direct_message','direct_mention','mention'], function
       });
     }
     askCompanyShares = function(response, convo) {
-      console.log('response',response);
+      var channel = response.channel;
       convo.ask('How many shares would you like to allocate to this company?', function(response, convo) {
         convo.say('Great! Setting up your company now...');
         convo.next();
@@ -43,7 +43,6 @@ controller.hears('paid', ['direct_message','direct_mention','mention'], function
       convo.on('end',function(convo) {
         if (convo.status=='completed') {
           // Extract the user's responses
-          console.log('convo',convo);
           var res = convo.extractResponses();
           var values = [];
           for (var value in res){
@@ -54,13 +53,13 @@ controller.hears('paid', ['direct_message','direct_mention','mention'], function
           var companyShares = value[1];
           bot.say({
             text:'Setup your company '+companyName+' with '+companyShares+'. Verified on the blockchain: <ether.scan.io/iaweijfaof23ijfi>.',
-            channel:convo.channel
+            channel:channel
           });
         } else {
           // something happened that caused the conversation to stop prematurely
           bot.say({
             text:'There was an issue setting up your account. Please try again.',
-            channel:convo.channel
+            channel:channel
           });
         }
 
