@@ -130,7 +130,7 @@ controller.hears(bot.utterances.yes, 'direct_message', function(bot,message) {
           // Save the results
           var proposalID = values[0];
           bot.say({
-            text:'Successfully voted YES for proposal #'+proposalID+'. Thank you for your vote!'.
+            text:'Successfully voted YES for proposal #'+proposalID+'. Thank you for your vote!',
             channel:channel
           });
         } else {
@@ -163,7 +163,7 @@ controller.hears(bot.utterances.no, 'direct_message', function(bot,message) {
           // Save the results
           var proposalID = values[0];
           bot.say({
-            text:'Successfully voted NO for proposal #'+proposalID+'. Thank you for your vote!'.
+            text:'Successfully voted NO for proposal #'+proposalID+'. Thank you for your vote!',
             channel:channel
           });
         } else {
