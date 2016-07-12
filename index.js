@@ -19,11 +19,12 @@ bot.startRTM(function(err,bot,payload) {
 // Handle a new slack channel adding the DAO-bot
 controller.on('bot_channel_join', function() {
   // Send welcome message, usage details, etc.
-  bot.startConversation('Hello, I am the almighty Slack-DAO. Please send 1000 gas to XXXX-XXXX-XXXX to get started');
+  bot.say('Hello, I am the almighty Slack-DAO. Please send 1000 gas to XXXX-XXXX-XXXX to get started');
 });
 
 // TODO: Replace when Ethereum Contract event on new payment
 controller.hears(['paid'], 'message_recieved', function(bot,message) {
+    console.log("Heard Paid",message);
     askCompanyName = function(response, convo) {
       convo.ask('What is your company name?', function(response, convo) {
         convo.say('Awesome name!');
