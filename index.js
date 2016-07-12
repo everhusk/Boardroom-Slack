@@ -148,7 +148,7 @@ controller.hears('yes', 'direct_message', function(bot,message) {
 // Handle new No vote
 controller.hears('no', 'direct_message', function(bot,message) {
     askProposalID = function(response, convo) {
-      var channel = response.channel;
+      console.log('response',response);
       convo.ask('What is the proposal id you are casting a vote for?', function(response, convo) {
         convo.next();
       });
