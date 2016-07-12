@@ -19,7 +19,7 @@ bot.startRTM(function(err,bot,payload) {
 controller.on('bot_channel_join', function(bot,message) {
   // Send welcome message, usage details, etc.
   bot.say({
-    text:'Hello, I am the almighty Slack-DAO. Please send 1000 gas to XXXX-XXXX-XXXX to get started',
+    text:'Hello, I am the almighty Boardroom Mediator Bot. Please send 1000 gas to XXXX-XXXX-XXXX to get started',
     channel:message.channel
   });
 });
@@ -113,7 +113,7 @@ controller.hears('proposal', ['direct_message','direct_mention','mention'], func
 });
 
 // Handle new Yes vote
-controller.hears(bot.utterances.yes, 'direct_message', function(bot,message) {
+controller.hears('yes', 'direct_message', function(bot,message) {
     askProposalID = function(response, convo) {
       var channel = response.channel;
       convo.ask('What is the proposal id you are casting a vote for?', function(response, convo) {
@@ -146,7 +146,7 @@ controller.hears(bot.utterances.yes, 'direct_message', function(bot,message) {
 });
 
 // Handle new No vote
-controller.hears(bot.utterances.no, 'direct_message', function(bot,message) {
+controller.hears('no', 'direct_message', function(bot,message) {
     askProposalID = function(response, convo) {
       var channel = response.channel;
       convo.ask('What is the proposal id you are casting a vote for?', function(response, convo) {
