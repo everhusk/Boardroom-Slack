@@ -34,6 +34,7 @@ controller.hears('paid', ['direct_message','direct_mention','mention'], function
       });
     }
     askCompanyShares = function(response, convo) {
+      console.log('response',response);
       convo.ask('How many shares would you like to allocate to this company?', function(response, convo) {
         convo.say('Great! Setting up your company now...');
         convo.next();
@@ -42,6 +43,7 @@ controller.hears('paid', ['direct_message','direct_mention','mention'], function
       convo.on('end',function(convo) {
         if (convo.status=='completed') {
           // Extract the user's responses
+          console.log('convo',convo);
           var res = convo.extractResponses();
           var values = [];
           for (var value in res){
