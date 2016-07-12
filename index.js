@@ -109,5 +109,73 @@ controller.hears('proposal', ['direct_message','direct_mention','mention'], func
 
       });
     }
-    bot.startConversation(message, askCompanyName);
+    bot.startConversation(message, askProposal);
+});
+
+// Handle new Yes vote
+controller.hears(bot.utterances.yes, 'direct_message', function(bot,message) {
+    askProposalID = function(response, convo) {
+      var channel = response.channel;
+      convo.ask('What is the proposal id you are casting a vote for?', function(response, convo) {
+        convo.next();
+        convo.on('end',function(convo) {
+          if (convo.status=='completed') {
+            // Extract the user's responses
+            var res = convo.extractResponses();
+            var values = [];
+            for (var key in res){
+              values.push(res[key]);
+            };
+            // Save the results
+            var proposalID = values[0];
+            bot.say({
+              text:'Successfully voted YES for proposal #'+proposalID+'. Thank you for your vote!'.
+              channel:channel
+            });
+          } else {
+            // something happened that caused the conversation to stop prematurely
+            bot.say({
+              text:'There was an issue casting your vote. Please try again.',
+              channel:channel
+            });
+          }
+
+        });
+      });
+    }
+    bot.startConversation(message, askProposalID);
+});
+
+// Handle new No vote
+controller.hears(bot.utterances.no, 'direct_message', function(bot,message) {
+    askProposalID = function(response, convo) {
+      var channel = response.channel;
+      convo.ask('What is the proposal id you are casting a vote for?', function(response, convo) {
+        convo.next();
+        convo.on('end',function(convo) {
+          if (convo.status=='completed') {
+            // Extract the user's responses
+            var res = convo.extractResponses();
+            var values = [];
+            for (var key in res){
+              values.push(res[key]);
+            };
+            // Save the results
+            var proposalID = values[0];
+            bot.say({
+              text:'Successfully voted NO for proposal #'+proposalID+'. Thank you for your vote!'.
+              channel:channel
+            });
+          } else {
+            // something happened that caused the conversation to stop prematurely
+            bot.say({
+              text:'There was an issue casting your vote. Please try again.',
+              channel:channel
+            });
+          }
+
+        });
+      });
+    }
+    bot.startConversation(message, askProposalID);
 });
