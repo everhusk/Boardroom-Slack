@@ -37,11 +37,27 @@ controller.hears('paid', ['direct_message','direct_mention','mention'], function
     }
     askCompanyShares = function(response, convo) {
       convo.ask('How many shares would you like to allocate to this company', function(response, convo) {
-        convo.say('Great! Setting up your company now!');
+        convo.say('Great! Setting up your company now...');
+        convo.end();
         // Create contract
       });
     }
     bot.startConversation(message, askCompanyName);
+});
+
+convo.on('end',function(convo) {
+
+  if (convo.status=='completed') {
+    // do something useful with the users responses
+    var res = convo.extractResponses();
+    // reference a specific response by key
+    var value  = convo.extractResponse('key');
+    console.log("Convo results: ",res);
+    console.log("Convo value: ",value);
+  } else {
+    // something happened that caused the conversation to stop prematurely
+  }
+
 });
 
 // Validate the channel has a positive balance (so I'm not wasting my money)
