@@ -17,9 +17,14 @@ bot.startRTM(function(err,bot,payload) {
 });
 
 // Handle a new slack channel adding the DAO-bot
-controller.on('bot_channel_join', function() {
+controller.on('bot_channel_join', function(bot,message) {
+  console.log("bot",bot);
+  console.log('message',message);
   // Send welcome message, usage details, etc.
-  bot.say('Hello, I am the almighty Slack-DAO. Please send 1000 gas to XXXX-XXXX-XXXX to get started');
+  bot.say({
+    text:'Hello, I am the almighty Slack-DAO. Please send 1000 gas to XXXX-XXXX-XXXX to get started',
+    channel:'boardroom'
+  });
 });
 
 // TODO: Replace when Ethereum Contract event on new payment
