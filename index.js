@@ -114,8 +114,8 @@ controller.hears('proposal', ['direct_message','direct_mention','mention'], func
 
 // Handle new Yes vote
 controller.hears('yes', 'direct_message', function(bot,message) {
+    var channel = message.channel;
     askProposalID = function(response, convo) {
-      var channel = response.channel;
       convo.ask('What is the proposal id you are casting a vote for?', function(response, convo) {
         convo.next();
       });
@@ -147,14 +147,13 @@ controller.hears('yes', 'direct_message', function(bot,message) {
 
 // Handle new No vote
 controller.hears('no', 'direct_message', function(bot,message) {
-    console.log('message',message);
+    var channel = message.channel;
     askProposalID = function(response, convo) {
       convo.ask('What is the proposal id you are casting a vote for?', function(response, convo) {
         convo.next();
       });
       convo.on('end',function(convo) {
         if (convo.status=='completed') {
-          console.log('convo',convo);
           // Extract the user's responses
           var res = convo.extractResponses();
           var values = [];
