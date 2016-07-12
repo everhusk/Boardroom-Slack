@@ -17,7 +17,7 @@ bot.startRTM(function(err,bot,payload) {
 });
 
 // Handle a new slack channel adding the DAO-bot
-controller.on('bot_group_join', function() {
+controller.on('bot_channel_join', function() {
   // Send welcome message, usage details, etc.
   bot.startConversation('Hello, I am the almighty Slack-DAO. Please send 1000 gas to XXXX-XXXX-XXXX to get started');
 });
