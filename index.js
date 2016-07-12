@@ -3,7 +3,6 @@ var Web3 = require('web3');
 var ethereum = new Web3(new Web3.providers.HttpProvider("https://eth3.augur.net")); // Augur.net 's public Ethereum node
 
 // Setup Slack Bot
-console.log("SLACK TOKEN: ",process.env.SLACK_TOKEN)
 var Botkit = require('botkit');
 var controller = Botkit.slackbot();
 var bot = controller.spawn({
@@ -27,7 +26,6 @@ controller.on('bot_channel_join', function(bot,message) {
 
 // TODO: Replace when Ethereum Contract event on new payment
 controller.hears('paid', ['direct_message','direct_mention','mention'], function(bot,message) {
-    console.log("Heard Paid",message);
     askCompanyName = function(response, convo) {
       convo.ask('What is your company name?', function(response, convo) {
         convo.say('Awesome name!');
@@ -38,26 +36,25 @@ controller.hears('paid', ['direct_message','direct_mention','mention'], function
     askCompanyShares = function(response, convo) {
       convo.ask('How many shares would you like to allocate to this company', function(response, convo) {
         convo.say('Great! Setting up your company now...');
-        convo.end();
+        convo.next();
         // Create contract
+      });
+      convo.on('end',function(convo) {
+
+        if (convo.status=='completed') {
+          // do something useful with the users responses
+          var res = convo.extractResponses();
+          // reference a specific response by key
+          var value  = convo.extractResponse('key');
+          console.log("Convo results: ",res);
+          console.log("Convo value: ",value);
+        } else {
+          // something happened that caused the conversation to stop prematurely
+        }
+
       });
     }
     bot.startConversation(message, askCompanyName);
-});
-
-convo.on('end',function(convo) {
-
-  if (convo.status=='completed') {
-    // do something useful with the users responses
-    var res = convo.extractResponses();
-    // reference a specific response by key
-    var value  = convo.extractResponse('key');
-    console.log("Convo results: ",res);
-    console.log("Convo value: ",value);
-  } else {
-    // something happened that caused the conversation to stop prematurely
-  }
-
 });
 
 // Validate the channel has a positive balance (so I'm not wasting my money)
