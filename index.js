@@ -24,6 +24,7 @@ controller.on('bot_channel_join', function(bot,message) {
   });
 });
 
+// Handle new company
 // TODO: Replace when Ethereum Contract event on new payment
 controller.hears('paid', ['direct_message','direct_mention','mention'], function(bot,message) {
     askCompanyName = function(response, convo) {
@@ -52,7 +53,7 @@ controller.hears('paid', ['direct_message','direct_mention','mention'], function
           var companyName = values[0];
           var companyShares = values[1];
           bot.say({
-            text:'Setup your company named "'+companyName+'" with '+companyShares+' shares available. Verified on the blockchain: www.ether.scan.io/link-to-transaction.',
+            text:'Setup your company named "'+companyName+'" with '+companyShares+' shares available. Verfied transaction at www.ether.scan.io/link-to-transaction.',
             channel:channel
           });
         } else {
@@ -68,28 +69,45 @@ controller.hears('paid', ['direct_message','direct_mention','mention'], function
     bot.startConversation(message, askCompanyName);
 });
 
-// Validate the channel has a positive balance (so I'm not wasting my money)
-// 1) Call Redis with channel ID (returns balance)
-// 2) Balance > estimate cost of transaction ? Continue : Return insufficient funds
+// Handle new proposals
+controller.hears('proposal', ['direct_message','direct_mention','mention'], function(bot,message) {
+    askProposal = function(response, convo) {
+      convo.ask('What is your Proposal?', function(response, convo) {
+        askVotingTime(response, convo);
+        convo.next();
+      });
+    }
+    askCompanyShares = function(response, convo) {
+      var channel = response.channel;
+      convo.ask('Got it. How long do people have to vote?', function(response, convo) {
+        convo.say('Setting up your proposal now...');
+        convo.next();
+        // Create contract
+      });
+      convo.on('end',function(convo) {
+        if (convo.status=='completed') {
+          // Extract the user's responses
+          var res = convo.extractResponses();
+          var values = [];
+          for (var key in res){
+            values.push(res[key]);
+          };
+          // Save the results
+          var proposal = values[0];
+          var timeLimit = values[1];
+          bot.say({
+            text:'New proposal: '+proposal+'. Verfied transaction at www.ether.scan.io/link-to-transaction. Voting ends in '+timeLimit+'. Please direct message me your vote (yes or no), the proposal ID is 1234567.',
+            channel:channel
+          });
+        } else {
+          // something happened that caused the conversation to stop prematurely
+          bot.say({
+            text:'There was an issue setting up your proposal. Please try again.',
+            channel:channel
+          });
+        }
 
-// New User Interaction Flow
-// 0) Validate channel has a positive balance - Success -> Start the flow , Fail -> Run welcome message;
-// 1a) Ask for company name
-// 1b) Ask for number of shares
-// 2) Create a new DAO linked to the slack group ID, assign all shares to the host user ID
-// 3) Post the result to the slack group. Success -> Post Transaction ID, Fail -> Error message
-
-// New Proposal Interation Flow
-// 0) Validate channel has a positive balance - Success -> Start the flow , Fail -> Run welcome message
-// 1a) Ask for proposal text
-// 1b) Ask for proposal shares
-// 2) Call the DAO contract and run a new proposal
-// 3) Post the result to the slack group. Success -> Post Transaction ID, Fail -> Error message
-
-// New Vote Interation Flow
-// 0) Validate channel has a positive balance - Success -> Start the flow , Fail -> Run welcome message
-// 1) Call contract (vote,userID), return result
-
-
-// Handle Ethereum Event - Quorum Reached (channelID,proposal,result)
-// 1) Return result to channel
+      });
+    }
+    bot.startConversation(message, askCompanyName);
+});
