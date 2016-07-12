@@ -34,7 +34,7 @@ controller.hears('paid', ['direct_message','direct_mention','mention'], function
       });
     }
     askCompanyShares = function(response, convo) {
-      convo.ask('How many shares would you like to allocate to this company', function(response, convo) {
+      convo.ask('How many shares would you like to allocate to this company?', function(response, convo) {
         convo.say('Great! Setting up your company now...');
         convo.next();
         // Create contract
@@ -45,9 +45,8 @@ controller.hears('paid', ['direct_message','direct_mention','mention'], function
           // do something useful with the users responses
           var res = convo.extractResponses();
           // reference a specific response by key
-          var value  = convo.extractResponse('key');
           console.log("Convo results: ",res);
-          console.log("Convo value: ",value);
+          convo.say('Setup your company <company_name> with <number_of_shares>. Verified on the blockchain: <ether.scan.io/iaweijfaof23ijfi>.');
         } else {
           // something happened that caused the conversation to stop prematurely
         }
