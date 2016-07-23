@@ -10,6 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "botkit": "^0.2.2",
+    "eth-lightwallet": "^2.4.3",
+    "pg": "^6.0.3",
     "slackbots": "^0.5.1",
     "web3": "^0.17.0-alpha"
   }
