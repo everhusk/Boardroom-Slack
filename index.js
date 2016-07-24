@@ -1,6 +1,6 @@
 // Connect to a public Ethereum node
-var Web3 = require('web3');
-var ethereum = new Web3(new Web3.providers.HttpProvider("https://eth3.augur.net")); // Augur.net 's public Ethereum node
+//var Web3 = require('web3');
+//var ethereum = new Web3(new Web3.providers.HttpProvider("https://eth3.augur.net")); // Augur.net 's public Ethereum node
 
 // Setup Slack Bot
 var Botkit = require('botkit');
